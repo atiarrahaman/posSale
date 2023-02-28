@@ -1,0 +1,38 @@
+section{
+	
+	padding-bottom: 50px;
+}
+
+
+
+
+.menu ul li{
+	list-style: none;
+	text-align: justify;
+	margin-top: 20px;
+	
+}
+
+.menu ul li a{
+	text-decoration: none;
+	
+	text-transform: uppercase;
+	padding:5px  15px;
+    color: #000;
+	
+}
+
+
+
+.menu ul li a.active{
+	background: rgb(243, 243, 6);
+	border-radius: 50px;
+
+}
+
+
+
+
+.sidebar{
+   margin-left: -100px;
+}
