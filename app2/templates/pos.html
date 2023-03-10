@@ -2,6 +2,70 @@
 
 
 {% block content %}
+    <form class="mt-4" action="" method="POST">
+        {% csrf_token %}
+        {{form.as_p}}
+        <input type="submit" value="Add">
+    </form>
+    <h3 class="alert alert-info">Your Bill</h3>
+   <div class="container">
+    <div class="row">
+        <div class="col-sm-12">
+            <table class="table">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">id</th>
+                    <th scope="col">Item </th>
+                    <th scope="col">QTY</th>
+                    <th scope="col">price</th>
+                    <th scope="col">gross price</th>
+                    <th scope="col">Vat 15%</th>
+                    <th scope="col">Total</th>
+                    
+                    <th scope="col">Action</th>
+                  </tr>
+                </thead>
+                <tbody>
+                 
+                 {% for i in posdata %}
+                 <tr>
+                    <th scope="row">{{i.item.slug}}</th>
+                    <td>{{i.item}}</td>
+                    <td>{{i.qty}}</td>
+                    <td>{{i.item.price}}</td>
+                    <td>{{i.possale_total}}</td>
+                    <td>{{i.vatcost}}</td>
+                    <td>{{i.Total_amount}}</td>
+                    
     
+                    
+                   
+                     
+                    <td>
+                       
+                        <a class="text-warning" href=""><i class="fa-solid fa-pen"></i></a>
+                        <a class="text-danger" href="{% url 'posdelete' i.id%}"><i class="fa-solid fa-trash"></i></a>
+                    </td>
+                  </tr>
+                 {% endfor %}
+                    
+                 
+                 
+                </tbody>
+              </table>
+        </div>
+     
+      
+    </div>
+    <hr>
+     <div class="">
+  <h5>Groos Total={{gross_total}}</h5>
+<h5>Tax 15% ={{vat}}</h5>
+<h5>Total= {{total}}</h5>
+<a href="" class="btn btn-primary">checkout</a>
+</div>
+</div>
+
+
 {% endblock content %}
     

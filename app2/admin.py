@@ -1,13 +1,13 @@
 
 from django.contrib import admin
-from .models import Product,Suplyer,ProductInput
+from .models import Product,Suplyer,ProductInput,ProductInputCart,PosSale,Client
 
 # Register your models here.
-
+admin.site.register(ProductInputCart)
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display=['id','item_name','price','status']
+    list_display=['id','item_name','price','qty','status']
 
 @admin.register(ProductInput)
 class ProductInputAdmin(admin.ModelAdmin):
@@ -17,3 +17,13 @@ class ProductInputAdmin(admin.ModelAdmin):
 @admin.register(Suplyer)
 class SuplyerAdmin(admin.ModelAdmin):
     list_display=['id','sypplyer_name']
+
+
+@admin.register(PosSale)
+class PosSaleAdmin(admin.ModelAdmin):
+    list_display=['id','item','qty']
+
+
+@admin.register(Client)
+class ClientAdmin(admin.ModelAdmin):
+    list_display=['id','client_name','tax_number']
