@@ -1,6 +1,6 @@
 
 from django.contrib import admin
-from .models import Product,Suplyer,ProductInput,ProductInputCart,PosSale,Client
+from .models import Product,Suplyer,ProductInput,ProductInputCart,PosSale,Client,CheckOut
 
 # Register your models here.
 admin.site.register(ProductInputCart)
@@ -27,3 +27,8 @@ class PosSaleAdmin(admin.ModelAdmin):
 @admin.register(Client)
 class ClientAdmin(admin.ModelAdmin):
     list_display=['id','client_name','tax_number']
+
+
+@admin.register(CheckOut)
+class CheckOutAdmin(admin.ModelAdmin):
+    list_display=['id','item','order_date']

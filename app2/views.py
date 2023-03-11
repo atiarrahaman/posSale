@@ -1,20 +1,24 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
-from .models import Product ,ProductInput,ProductInputCart,PosSale
+from .models import Product ,ProductInput,ProductInputCart,PosSale,CheckOut
 from .forms import ProductAddForm ,ProductInputForm,PosSaleForm
 # Create your views here.
 
 
 def Home(request):
-    return render(request,'dashboard.html')
+    context={'home':'active'}
+    return render(request,'dashboard.html',context)
 
 def ProductInputs(request):
     pd=ProductInput.objects.all()
+    
+   
     if request.method== 'POST':
         fm=ProductInputForm(request.POST)
         if fm.is_valid():
             fm.save()
-            
+            # totalqty=pdget.qty+fm.qty
+            # totalqty.save()
             fm=ProductInputForm()
     else:
         fm=ProductInputForm()
@@ -30,7 +34,7 @@ def ProductInputs(request):
             vat=( amount * 15 / 100)
             total=amount+vat
     
-    context={'form':fm,'pd':pd,'total':total,'amount':amount,'vat':vat,}
+    context={'form':fm,'pd':pd,'total':total,'amount':amount,'vat':vat,'productinput':'active'}
     return render(request,'productinput.html',context)
 
 # def ProductInputCartShow(request):
@@ -39,6 +43,7 @@ def ProductInputs(request):
     
 #     ProductInputCart(item=item).save()
 #     return redirect('productinput')
+
 
 
 def ProductList(request):
@@ -51,7 +56,7 @@ def ProductList(request):
     else:
         fm=ProductAddForm()
 
-    context={'pd':product,'form':fm}
+    context={'pd':product,'form':fm,'productlist':'active'}
     return render(request,'productlist.html',context)
 
 
@@ -79,7 +84,12 @@ def Pos(request):
 
             
 
-    context={'form':fm,'posdata':posdata,'gross_total':gross_total,'vat':vat,'total':total}
+    context={
+        'form':fm,'posdata':posdata,
+        'gross_total':gross_total,
+        'vat':vat,'total':total,
+        'pos':'active'
+        }
     return render(request,'pos.html',context)
 
 def PostDelete(request,id):
@@ -88,10 +98,19 @@ def PostDelete(request,id):
     return redirect('pos')
 
 def Sale(request):
-    return render(request,'sale.html')
+    context={'sale':'active'}
+    return render(request,'sale.html',context)
 
 
 def Delete(request,id):
     dl=ProductInput.objects.get(id=id)
     dl.delete()
     return redirect('productinput')
+
+
+def Checkout(request):
+    cart=PosSale.objects.all()
+    for c  in cart:
+        CheckOut(item=c.item).save()
+        c.delete()
+    return redirect('sale')

@@ -15,35 +15,22 @@
 	 <nav class="navbar navbar-expand-lg navbar-dark bg-success ">
         <div class="container">
           <a class="navbar-brand" href="{% url 'home' %}">Pose</a>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
+        
           <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
-            <form class="form-inline my-2 my-lg-0" action="" method="GET">
-              {% csrf_token %}
-              <div class="input-group">
-              <input name="q" type="search" class="form-control" placeholder="search" />
-              <div class="input-group-append">
-                <button class="btn btn-warning"  id="button-addon2">Search</button>
-              </div>
-            </div>
-            </form>
+           
 
             <ul class="navbar-nav ml-auto">
-              <li class="nav-item">
-                <a class="nav-link text-white" href="/">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href=" ">Categories</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white" href="">Brands</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link text-white"   href="{"><i class="fa fa-shopping-cart"></i> Cart (<span class="cart-list">{{carts.count}}</span>)</a>
-              </li>
-                 
+              
+              <form class="" action="" method="GET">
+                {% csrf_token %}
+                <div class="input-group">
+                <input name="q" type="search" class="form-control" placeholder="search" />
+                <div class="input-group-append">
+                  <button class="btn btn-warning"  id="button-addon2">Search</button>
+                </div>
+              </div>
+              </form>
       
              {% if request.user.is_authenticated %}
              <li class="dropdown">
@@ -70,26 +57,32 @@
         </div>
        </nav> 
     <section class="">
-        <div class="container">
-            <div class="row">
-                <div class="col-sm-3 sidebar ">
-                   {% include 'sidebar.html' %}
-                </div>
- 
-               <!-- sidebar end --> 
 
-                <!-- start home page content -->
-             <div class="col-sm-10">
-                 {% block content %}
-                 {% endblock content %}
-             </div>
- 
-             <!-- end home page content -->
-            </div>
+    
+
+    <div class="flex-container">
+      <div class="sidebar">
+        <div class="menu">
+              <ul>
+                  <li><a href="{% url 'home' %} " class="{{home}}"><i class="fa-solid fa-house"></i> home</a></li>
+                  <li><a href="{% url 'productinput' %}"  class="{{productinput}}"><i class="fa-solid fa-box"></i> Product input</a></li>
+                  <li><a href="{% url 'productlist' %}" class="{{productlist}}"><i class="fa-solid fa-list-check"></i> Product list</a></li>
+                  <li><a href="{% url 'pos' %}" class="{{pos}}"><i class="fa-solid fa-cart-plus"></i> Pos</a></li>
+                  <li><a href="{% url 'sale' %}"class="{{sale}}" ><i class="fa-regular fa-calendar-minus"></i> Sale</a></li>
+              </ul>
+          </div>
         </div>
- 
- 
-       </section>
+      <div class="main_containt">
+       <div class="block_contain">
+        {% block content %}
+        {% endblock content %}
+       </div>
+      </div>
+     
+    </div>
+    
+      
+    </section>
 
        <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.6/dist/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>

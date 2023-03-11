@@ -5,7 +5,8 @@
     <form  class="mt-4" action="" method="POST">
         {% csrf_token %}
         {{form.as_p}}
-        <input type="submit" value="Add">
+        
+        <input type="submit" value="Add" >
     </form>
     <hr>
     <h3 class="alert alert-danger text-center">Input Data Show</h3>
@@ -22,6 +23,7 @@
                     <th scope="col">Goss price</th>
                     <th scope="col">vat 15%</th>
                     <th scope="col">Total</th>
+                    
                     <th scope="col">Action</th>
                   </tr>
                 </thead>
@@ -37,6 +39,7 @@
                     
                     <td>{{i.vatamount}}</td>
                     <td>{{i.totalAmount}}</td>
+                   
                      
                     <td>
                         <a class=" text-warning" href=""><i class="fa-solid fa-pen"></i></a>

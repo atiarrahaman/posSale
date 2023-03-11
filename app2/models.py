@@ -40,6 +40,13 @@ class ProductInput(models.Model):
     @property
     def Gross_amount(self):
        return self.price*self.qty
+
+
+   
+   
+    
+
+
     @property
     def vatamount(self):
        temp=(self.price*self.qty)
@@ -87,5 +94,10 @@ class PosSale(models.Model):
      totalamount=(temp+vat)
      return totalamount
     
+
+
+class CheckOut(models.Model):
+    item=models.ForeignKey(Product,on_delete=models.CASCADE)
+    order_date= models.DateTimeField(auto_now_add=True)
     
 
