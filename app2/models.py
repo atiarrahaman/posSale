@@ -99,5 +99,13 @@ class PosSale(models.Model):
 class CheckOut(models.Model):
     item=models.ForeignKey(Product,on_delete=models.CASCADE)
     order_date= models.DateTimeField(auto_now_add=True)
+    qty=models.PositiveIntegerField(default=1)
+
+    @property
+    def Total_amount(self):
+     temp=( self.qty * self.item.price)
+     vat=(temp*15/100)
+     totalamount=(temp+vat)
+     return totalamount
     
 

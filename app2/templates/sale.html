@@ -2,6 +2,48 @@
 
 
 {% block content %}
-    
+<h3 class="alert alert-success text-center">Total Sale list</h3>
+<div class="container">
+ <div class="row">
+     <div class="col-sm-12">
+         <table class="table">
+             <thead class="thead-light">
+               <tr>
+                 <th scope="col">id</th>
+                 <th scope="col">Item Name</th>
+                 <th scope="col">QTY</th>
+                 <th scope="col">price</th>
+                 <th scope="col">date</th>
+                  <th scope="col">Action</th>
+               </tr>
+             </thead>
+             <tbody>
+              
+              {% for i in sale %}
+              <tr>
+                 <th scope="row">{{i.item.id}}</th>
+                 <td>{{i.item.item_name}}</td>
+                 <td>{{i.qty}}</td>
+                 <td>{{i.Total_amount}}</td>
+                 <td>{{i.order_date}}</td>
+                
+                  
+                 <td>
+                     
+                     <a class=" text-danger" href=""><i class="fa-regular fa-eye"></i></i></a>
+                 </td>
+               </tr>
+              {% endfor %}
+                 
+              
+              
+             </tbody>
+           </table>
+     </div>
+ 
+   
+ </div>
+ 
+</div>
 {% endblock content %}
     

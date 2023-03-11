@@ -1,12 +1,14 @@
 
 
-
+section{
+  margin-top:56px;
+}
 
 
 .menu ul li{
 	list-style: none;
 	text-align: justify;
-	margin-top: 20px;
+	margin-top: 20px
 	
 }
 
@@ -15,6 +17,7 @@
 	text-transform: uppercase;
 	color: #f1f1f1;
 	transition: 0.3s;
+	;
 }
 
 .menu ul li a:hover{

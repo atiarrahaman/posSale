@@ -98,7 +98,8 @@ def PostDelete(request,id):
     return redirect('pos')
 
 def Sale(request):
-    context={'sale':'active'}
+    sale=CheckOut.objects.all()
+    context={'sale':'active','sale':sale}
     return render(request,'sale.html',context)
 
 
@@ -111,6 +112,6 @@ def Delete(request,id):
 def Checkout(request):
     cart=PosSale.objects.all()
     for c  in cart:
-        CheckOut(item=c.item).save()
+        CheckOut(item=c.item,qty=c.qty).save()
         c.delete()
     return redirect('sale')
