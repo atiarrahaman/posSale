@@ -2,68 +2,86 @@
 
 
 {% block content %}
-    <form  class="mt-4" action="" method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        
-        <input type="submit" value="Add" >
-    </form>
+    <div class="contianer">
+      <div class="row">
+      <div class="col-sm-3"></div>
+      <div class="col-sm-6">
+        <h5 class="alert alert-success">Inpute Here</h5>
+        <form  class="mt-4" action="" method="POST">
+          {% csrf_token %}
+          {{form.as_p}}
+          
+          <input type="submit" value="Add" class="btn btn-primary w-100">
+      </form>
+      </div>
+      <div class="col-sm-3"></div>
+      </div>
+    </div>
     <hr>
-    <h3 class="alert alert-danger text-center">Input Data Show</h3>
-   <div class="container">
-    <div class="row">
-        <div class="col-sm-12">
-            <table class="table">
-                <thead class="thead-light">
-                  <tr>
-                    <th scope="col">id</th>
-                    <th scope="col">Item Name</th>
-                    <th scope="col">QTY</th>
-                    <th scope="col">price</th>
-                    <th scope="col">Goss price</th>
-                    <th scope="col">vat 15%</th>
-                    <th scope="col">Total</th>
-                    
-                    <th scope="col">Action</th>
-                  </tr>
-                </thead>
-                <tbody>
-                 
-                 {% for i in pd %}
-                 <tr>
-                    <th scope="row">{{i.id}}</th>
-                    <td>{{i.item_name}}</td>
-                    <td>{{i.qty}}</td>
-                    <td>{{i.price}}</td>
-                    <td>{{i.Gross_amount}}</td>
-                    
-                    <td>{{i.vatamount}}</td>
-                    <td>{{i.totalAmount}}</td>
+   
+  
+   <h4 class="alert alert-info">Your Item </h4>
+   {% if pd %}
+   <form action="/productinputsuccess">
+    <div class="container">
+      <div class="row">
+          <div class="col-sm-12">
+              <table class="table">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col">id</th>
+                      <th scope="col">Item Name</th>
+                      <th scope="col">QTY</th>
+                      <th scope="col">price</th>
+                      <th scope="col">Goss price</th>
+                      <th scope="col">vat 15%</th>
+                      <th scope="col">Total</th>
+                      
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
                    
+                   {% for i in pd %}
+                   <tr>
+                      <th scope="row">{{i.id}}</th>
+                      <td>{{i.item_name}}</td>
+                      <td>{{i.qty}}</td>
+                      <td>{{i.price}}</td>
+                      <td>{{i.Gross_amount}}</td>
+                      
+                      <td>{{i.vatamount}}</td>
+                      <td>{{i.totalAmount}}</td>
                      
-                    <td>
-                        <a class=" text-warning" href=""><i class="fa-solid fa-pen"></i></a>
-                        <a class=" text-danger" href="{% url 'delete' i.id %}"><i class="fa-solid fa-trash"></i></a>
-                    </td>
-                  </tr>
-                 {% endfor %}
-                    
-                 
-                 
-                </tbody>
-              </table>
-        </div>
+                       
+                      <td>
+                          <a class=" text-warning" href=""><i class="fa-solid fa-pen"></i></a>
+                          <a class=" text-danger" href="{% url 'delete' i.id %}"><i class="fa-solid fa-trash"></i></a>
+                      </td>
+                    </tr>
+                   {% endfor %}
+                      
+                   
+                   
+                  </tbody>
+                </table>
+          </div>
+      
+        
+      </div>
+      <hr>
+      <div class="">
+        <h5>Amout={{amount}}</h5>
+        <h5>vat 15% ={{vat}}</h5>
+        <h5>Total={{total}}</h5>
+        
+       <input type="submit" value="Submit" class="btn btn-primary">
+      </div>
+     </div>
+   </form>
+   {% else %}
+  <h3 class="text-danger"> There Is No Item </h3>
+   {% endif %}
     
-      
-    </div>
-    <hr>
-    <div class="">
-      <h5>Amout={{amount}}</h5>
-      <h5>vat 15% ={{vat}}</h5>
-      <h5>Total={{total}}</h5>
-      
-      <a href="" class="btn btn-primary">Submit</a>
-    </div>
-   </div>
 {% endblock content %}
     

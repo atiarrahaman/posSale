@@ -10,7 +10,7 @@ def Home(request):
     return render(request,'dashboard.html',context)
 
 def ProductInputs(request):
-    pd=ProductInput.objects.all()
+    pd=ProductInput.objects.all().order_by('-id')
     
    
     if request.method== 'POST':
@@ -37,17 +37,17 @@ def ProductInputs(request):
     context={'form':fm,'pd':pd,'total':total,'amount':amount,'vat':vat,'productinput':'active'}
     return render(request,'productinput.html',context)
 
-# def ProductInputCartShow(request):
-#     item_id=request.GET.get('item_id')
-#     item=ProductInput.objects.get(id=item_id)
-    
-#     ProductInputCart(item=item).save()
-#     return redirect('productinput')
+def ProductInputSuccess(request):
+    cart=ProductInput.objects.all()
+    for c in cart:
+        ProductInputCart(item=c.item_name,qty=c.qty).save()
+        c.delete()
+    return redirect('productinput')
 
 
 
 def ProductList(request):
-    product=Product.objects.all()
+    product=Product.objects.all().order_by('-id')
     if request.method== 'POST':
         fm=ProductAddForm(request.POST)
         if fm.is_valid():
@@ -59,9 +59,23 @@ def ProductList(request):
     context={'pd':product,'form':fm,'productlist':'active'}
     return render(request,'productlist.html',context)
 
+def ProductEdit(request,pk):
+    if request.method=='POST':
+        item=request.POST['item']
+        price=request.POST['price']
+       
+        Product.objects.filter(id=pk).update(
+            
+            item_name=item,
+            price=price
+           
+        )
+    
+    return redirect(request.META['HTTP_REFERER'])
 
 def Pos(request):
-    posdata=PosSale.objects.all()
+    posdata=PosSale.objects.all().order_by('-id')
+    
     if request.method== 'POST':
         fm=PosSaleForm(request.POST)
         if fm.is_valid():
@@ -69,7 +83,7 @@ def Pos(request):
             fm=PosSaleForm()
     else:
         fm=PosSaleForm()
-    
+   
     gross_total=0.0
     vat=0.0
     total=0.0
@@ -88,9 +102,21 @@ def Pos(request):
         'form':fm,'posdata':posdata,
         'gross_total':gross_total,
         'vat':vat,'total':total,
-        'pos':'active'
+        'pos':'active',
+       
+        
         }
     return render(request,'pos.html',context)
+
+
+def Edit(request,pk):
+    if request.method=='POST':
+       qty=request.POST['qty']
+       PosSale.objects.filter(id=pk).update(qty=qty,)
+    
+    return redirect(request.META['HTTP_REFERER'])
+
+
 
 def PostDelete(request,id):
     dl=PosSale.objects.get(id=id)
@@ -98,7 +124,7 @@ def PostDelete(request,id):
     return redirect('pos')
 
 def Sale(request):
-    sale=CheckOut.objects.all()
+    sale=CheckOut.objects.all().order_by('-id')
     context={'sale':'active','sale':sale}
     return render(request,'sale.html',context)
 

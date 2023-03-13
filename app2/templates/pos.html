@@ -2,12 +2,20 @@
 
 
 {% block content %}
-    <form class="mt-4" action="" method="POST">
-        {% csrf_token %}
-        {{form.as_p}}
-        <input type="submit" value="Add">
-    </form>
-    <h3 class="alert alert-info">Your Bill</h3>
+   <div class="container">
+    <div class="row">
+      <div class="col-sm-6">
+        <form class="mt-4" action="" method="POST" >
+          {% csrf_token %}
+          {{form.as_p}}
+          <input type="submit" value="Add" class="btn btn-primary ">
+      </form>
+       </div>
+    
+     <div class="col-sm-6"></div>
+   </div>
+  </div>
+    <h3 class="alert alert-info mt-3">Your Bill</h3>
     <form action="/checkout">
       <div class="container">
         <div class="row">
@@ -15,7 +23,7 @@
                 <table class="table">
                     <thead class="thead-light">
                       <tr>
-                        <th scope="col">id</th>
+                        <th scope="col">Slug Code</th>
                         <th scope="col">Item </th>
                         <th scope="col">QTY</th>
                         <th scope="col">price</th>
@@ -37,23 +45,19 @@
                         <td>{{i.possale_total}}</td>
                         <td>{{i.vatcost}}</td>
                         <td>{{i.Total_amount}}</td>
-                        
-        
-                        
-                       
-                         
-                        <td>
-                           
-                            <a class="text-warning" href=""><i class="fa-solid fa-pen"></i></a>
-                            <a class="text-danger" href="{% url 'posdelete' i.id%}"><i class="fa-solid fa-trash"></i></a>
+                         <td>
+                          
+                        <a href="" type="button" data-toggle="modal" data-target="#exampleModal{{i.id}}" class="text-warning"><i class="fa-solid fa-pen"></i></a>
+                          <a class="text-danger" href="{% url 'posdelete' i.id%}"><i class="fa-solid fa-trash"></i></a>
                         </td>
+  
                       </tr>
                      {% endfor %}
                         
-                     
-                     
                     </tbody>
                   </table>
+ 
+
             </div>
          
           
@@ -67,9 +71,39 @@
     </div>
     </div>
     </form>
-   
-
-
-
+    
+       
+     
+     {% for i in posdata %}
+                           <!-- Modal -->
+<div class="modal fade" id="exampleModal{{i.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit Your Data</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <form action="{% url 'edit' i.id %}" method="POST">
+        {% csrf_token %}
+        <div class="modal-body">
+         <label for=""> item</label>
+         <input name="item" type="text" disabled value="{{i.item}}" class="form-control" >
+         <label for=""> QTY</label>
+         <input name="qty" type="number"  value="{{i.qty}}" class="form-control" >
+       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+      </form>
+  </div>
+</div>      
+     {% endfor %}
+      
+     
 {% endblock content %}
     

@@ -40,13 +40,6 @@ class ProductInput(models.Model):
     @property
     def Gross_amount(self):
        return self.price*self.qty
-
-
-   
-   
-    
-
-
     @property
     def vatamount(self):
        temp=(self.price*self.qty)
@@ -65,7 +58,8 @@ class ProductInput(models.Model):
 
 
 class ProductInputCart(models.Model):
-    item=models.ForeignKey('ProductInput', on_delete=models.CASCADE)
+    item=models.ForeignKey('Product', on_delete=models.CASCADE)
+    qty=models.PositiveIntegerField(default=1)
 
 
 class Client(models.Model):

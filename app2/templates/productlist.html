@@ -56,9 +56,10 @@
         <td>{{i.price}}</td>
         <td>{{i.qty}}</td>
         <td>
-            <a class=" text-warning" href=""><i class="fa-solid fa-pen"></i></a>
+            <a type="button" class="text-warning" data-toggle="modal" data-target="#exampleModals{{i.id}}" href=""><i class="fa-solid fa-pen"></i></a>
             <a class="text-danger" href=""><i class="fa-solid fa-trash"></i></a>
         </td>
+      
       </tr>
      {% endfor %}
         
