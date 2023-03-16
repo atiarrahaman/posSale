@@ -80,3 +80,21 @@ section{
 	padding: 20px;
 
 }
+.form_p{
+	padding: 10px;
+    display : inline;
+}
+
+.form_p input#id_qty {
+    padding: 5px;
+    border-radius: 5px;
+    width: 90px;
+    outline: none;
+}
+
+.form_p select#id_item {
+    width: 300px;
+    padding: 5px;
+    border-radius: 5px;
+    outline: none;
+}

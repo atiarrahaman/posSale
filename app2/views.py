@@ -1,12 +1,24 @@
 from django.shortcuts import render,redirect
 from django.http import HttpResponseRedirect
 from .models import Product ,ProductInput,ProductInputCart,PosSale,CheckOut
-from .forms import ProductAddForm ,ProductInputForm,PosSaleForm
+from .forms import ProductAddForm ,ProductInputForm,PosSaleForm,AddCompanyNameForm
 # Create your views here.
 
 
 def Home(request):
-    context={'home':'active'}
+    total_amount=0.0
+    sale=[p for p in CheckOut.objects.all()]
+    if sale:
+        for sale in sale:
+            amount=(sale.qty*sale.item.price)
+            vat=(amount*15/100)
+            total=(amount+vat)
+            total_amount+=total
+            
+           
+
+
+    context={'home':'active','total_amount':total_amount}
     return render(request,'dashboard.html',context)
 
 def ProductInputs(request):
@@ -63,7 +75,7 @@ def ProductEdit(request,pk):
     if request.method=='POST':
         item=request.POST['item']
         price=request.POST['price']
-       
+        
         Product.objects.filter(id=pk).update(
             
             item_name=item,
@@ -75,35 +87,43 @@ def ProductEdit(request,pk):
 
 def Pos(request):
     posdata=PosSale.objects.all().order_by('-id')
+    if request.method== "POST":
+        addform=AddCompanyNameForm(request.POST)
+        if addform.is_valid():
+            addform.save()
+            return redirect('pos')
+    else:
+        addform=AddCompanyNameForm()
     
     if request.method== 'POST':
         fm=PosSaleForm(request.POST)
         if fm.is_valid():
             fm.save()
             fm=PosSaleForm()
+            return redirect('pos')
     else:
         fm=PosSaleForm()
-   
+
     gross_total=0.0
     vat=0.0
     total=0.0
+    discount=0.0
     posamount=[p for p in PosSale.objects.all()]
     if posamount:
         for p in posamount:
             temp=(p.qty*p.item.price)
             gross_total+=temp
             vat=(gross_total*15/100)
-            total+=gross_total+vat
-            
-
-            
-
+            discount+=(p.Discount_price)
+            total=gross_total+vat -discount
     context={
         'form':fm,'posdata':posdata,
         'gross_total':gross_total,
         'vat':vat,'total':total,
         'pos':'active',
-       
+        'discount':discount,
+        
+        'addform':addform
         
         }
     return render(request,'pos.html',context)
@@ -112,7 +132,8 @@ def Pos(request):
 def Edit(request,pk):
     if request.method=='POST':
        qty=request.POST['qty']
-       PosSale.objects.filter(id=pk).update(qty=qty,)
+       discount=request.POST['discount']
+       PosSale.objects.filter(id=pk).update(qty=qty,Discount_price=discount)
     
     return redirect(request.META['HTTP_REFERER'])
 
@@ -140,4 +161,10 @@ def Checkout(request):
     for c  in cart:
         CheckOut(item=c.item,qty=c.qty).save()
         c.delete()
-    return redirect('sale')
+        return redirect('invoice')
+    
+
+def Invoice(request):
+    check=Checkout.objects.filter(id=id)
+    
+    return render(request,'invoice.html')

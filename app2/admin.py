@@ -1,8 +1,11 @@
 
 from django.contrib import admin
-from .models import Product,Suplyer,ProductInput,ProductInputCart,PosSale,Client,CheckOut
+from .models import *
 
 # Register your models here.
+
+
+
 admin.site.register(ProductInputCart)
 
 @admin.register(Product)

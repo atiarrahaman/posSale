@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+
+
+      <div id="data">
+        <h1>hello Print</h1>
+        
+    </div>
+
+
+    <button onclick="myfun()" class="btn btn-primary mt-3">Get Bill</button>
+    <script type="text/javascript">
+        function myfun(){
+          var body = document.getElementById('body').innerHTML;
+          var data = document.getElementById('data').innerHTML;
+          document.getElementById('body').innerHTML=data;
+          window.print();
+          document.getElementById('body').innerHTML=body;
+        }
+      
+      </script>
+
+{% endblock content %}
+    

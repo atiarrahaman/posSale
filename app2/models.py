@@ -64,15 +64,17 @@ class ProductInputCart(models.Model):
 
 class Client(models.Model):
     client_name=models.CharField(max_length=250,default='company name')
-    tax_number=models.IntegerField(default=0)
+    tax_number=models.IntegerField(default=300950786200003)
 
 
 class PosSale(models.Model):
     item=models.ForeignKey('Product', on_delete=models.CASCADE)
     qty=models.PositiveIntegerField(default=1)
+    Discount_price=models.FloatField(default=0)
 
+     
     @property
-    def possale_total(self):
+    def gross_price(self):
      return self.qty * self.item.price
     
     @property
@@ -85,12 +87,13 @@ class PosSale(models.Model):
     def Total_amount(self):
      temp=( self.qty * self.item.price)
      vat=(temp*15/100)
-     totalamount=(temp+vat)
+     totalamount=(temp+vat - self.Discount_price)
      return totalamount
     
 
 
 class CheckOut(models.Model):
+    possale=models.ForeignKey(PosSale, on_delete=models.CASCADE,blank=True ,null=True)
     item=models.ForeignKey(Product,on_delete=models.CASCADE)
     order_date= models.DateTimeField(auto_now_add=True)
     qty=models.PositiveIntegerField(default=1)
@@ -103,3 +106,6 @@ class CheckOut(models.Model):
      return totalamount
     
 
+
+   
+   
