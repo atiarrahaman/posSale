@@ -10,11 +10,8 @@ urlpatterns = [
     path('sale',views.Sale , name='sale'),
     path('delete/<int:id>',views.Delete , name='delete' ),
     path('posdelete/<int:id>',views.PostDelete , name='posdelete' ),
-    path('checkout',views.Checkout , name='checkout' ),
+    path('checkout/',views.Checkout , name='checkout' ),
     path('edit/<int:pk>',views.Edit , name='edit' ),
     path('productedit/<int:pk>',views.ProductEdit , name='productedit' ),
-    path('invoice',views.Invoice , name='invoice' ),
-    
-    
-   
+    # path('invoice',views.Invoice , name='invoice' ),
 ]

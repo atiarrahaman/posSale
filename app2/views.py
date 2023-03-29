@@ -122,10 +122,8 @@ def Pos(request):
         'vat':vat,'total':total,
         'pos':'active',
         'discount':discount,
-        
         'addform':addform
-        
-        }
+    }
     return render(request,'pos.html',context)
 
 
@@ -157,14 +155,33 @@ def Delete(request,id):
 
 
 def Checkout(request):
-    cart=PosSale.objects.all()
-    for c  in cart:
-        CheckOut(item=c.item,qty=c.qty).save()
-        c.delete()
-        return redirect('invoice')
+
+    posdata=list(PosSale.objects.all().order_by('-id'))
+    gross_total=0.0
+    vat=0.0
+    total=0.0
+    discount=0.0
+    posamount=[p for p in PosSale.objects.all()]
+    if posamount:
+        for p in posamount:
+            temp=(p.qty*p.item.price)
+            gross_total+=temp
+            vat=(gross_total*15/100)
+            discount+=(p.Discount_price)
+            total=gross_total+vat -discount
+    context={
+        'posdata':posdata,
+        'gross_total':gross_total,
+        'vat':vat,'total':total,
+        'pos':'active',
+        'discount':discount,
+        
+    }
+    for pos_obj in PosSale.objects.all():
+        CheckOut(item=pos_obj.item,qty=pos_obj.qty).save()
+        pos_obj.delete()
+
+    return render(request,'invoice.html', context)
     
 
-def Invoice(request):
-    check=Checkout.objects.filter(id=id)
-    
-    return render(request,'invoice.html')
+
