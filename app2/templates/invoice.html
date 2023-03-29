@@ -1,26 +1,160 @@
 {% extends 'base.html' %}
 
-
 {% block content %}
 
 
-      <div id="data">
-        <h1>hello Print</h1>
-        
-    </div>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Invoice</title>
+	<style>
+		body {
+			font-family: Arial, sans-serif;
+			font-size: 12px;
+			line-height: 1.4;
+			margin: 0;
+			padding: 0;
+		}
 
+		.container {
+			width: 800px;
+			margin: 0 auto;
+		}
 
-    <button onclick="myfun()" class="btn btn-primary mt-3">Get Bill</button>
-    <script type="text/javascript">
-        function myfun(){
-          var body = document.getElementById('body').innerHTML;
-          var data = document.getElementById('data').innerHTML;
-          document.getElementById('body').innerHTML=data;
-          window.print();
-          document.getElementById('body').innerHTML=body;
-        }
-      
-      </script>
+		h1 {
+			font-size: 24px;
+			margin-top: 20px;
+			margin-bottom: 20px;
+			text-align: center;
+		}
+
+		table {
+			width: 100%;
+			border-collapse: collapse;
+			margin-bottom: 20px;
+		}
+
+		table td, table th {
+			border: 1px solid #ddd;
+			padding: 8px;
+			text-align: left;
+		}
+
+		table th {
+			background-color: #f2f2f2;
+			font-weight: bold;
+		}
+
+		.total {
+			margin-top: 20px;
+			margin-bottom: 20px;
+			text-align: right;
+		}
+
+		.footer {
+			margin-top: 20px;
+			text-align: center;
+		}
+
+    @media print {
+    body {
+      font-size: 10pt;
+      line-height: 1.2;
+    }
+
+    h1 {
+      font-size: 20pt;
+      margin-top: 0;
+      margin-bottom: 20pt;
+    }
+
+    table {
+      margin-bottom: 10pt;
+    }
+
+    table th, table td {
+      padding: 6pt;
+    }
+
+    .total {
+      margin-top: 20pt;
+      margin-bottom: 10pt;
+    }
+
+    .footer {
+      margin-top: 20pt;
+    }
+
+    /* hide some elements that are not necessary for print */
+    button {
+      display: none;
+    }
+
+    #printable-area {
+				display: block;
+			}
+
+    .non-printable {
+      display: none;
+    }
+  }
+
+	</style>
+</head>
+<body>
+	<div class="container" id="printable-area">
+    
+    <h1>COMAPNY NAME</h1>
+  
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Slug Code</th>
+            <th scope="col">Item </th>
+            <th scope="col">QTY</th>
+            <th scope="col">price</th>
+            <th scope="col">gross price</th>
+            <th scope="col">Vat 15%</th>
+            <th scope="col">Discount</th>
+            <th scope="col">Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for i in posdata %}
+          <tr>
+            <th scope="row">{{i.item.slug}}</th>
+            <td>{{i.item}}</td>
+            <td>{{i.qty}}</td>
+            <td>{{i.item.price}}</td>
+            <td>{{i.gross_price}}</td>
+            <td>{{i.vatcost}}</td>
+            <td>{{i.Discount_price}}</td>
+            <td>{{i.Total_amount}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  
+      <div class="total">
+        Total: {{ total }}
+      </div>
+  
+      <div class="footer">
+        Thank you for your business!
+      </div>
+  </div>
+
+  <button onclick="window.print()" class="btn btn-primary mt-3 non-printable">Get Bill</button>
+
+</body>
+</html>
 
 {% endblock content %}
-    
+
+
+
+
+
+
