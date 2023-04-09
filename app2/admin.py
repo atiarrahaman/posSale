@@ -5,8 +5,12 @@ from .models import *
 # Register your models here.
 
 
-
+admin.site.register(AddExpenseMony)
+admin.site.register(AddTrasctions)
 admin.site.register(ProductInputCart)
+admin.site.register(BuyProduct)
+admin.site.register(AddCash)
+
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):

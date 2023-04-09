@@ -1,117 +1,51 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
 
 
-<!DOCTYPE html>
-<html>
-<head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Invoice</title>
-	<style>
-		body {
-			font-family: Arial, sans-serif;
-			font-size: 12px;
-			line-height: 1.4;
-			margin: 0;
-			padding: 0;
-		}
 
-		.container {
-			width: 800px;
-			margin: 0 auto;
-		}
-
-		h1 {
-			font-size: 24px;
-			margin-top: 20px;
-			margin-bottom: 20px;
-			text-align: center;
-		}
-
-		table {
-			width: 100%;
-			border-collapse: collapse;
-			margin-bottom: 20px;
-		}
-
-		table td, table th {
-			border: 1px solid #ddd;
-			padding: 8px;
-			text-align: left;
-		}
-
-		table th {
-			background-color: #f2f2f2;
-			font-weight: bold;
-		}
-
-		.total {
-			margin-top: 20px;
-			margin-bottom: 20px;
-			text-align: right;
-		}
-
-		.footer {
-			margin-top: 20px;
-			text-align: center;
-		}
-
-    @media print {
-    body {
-      font-size: 10pt;
-      line-height: 1.2;
-    }
-
-    h1 {
-      font-size: 20pt;
-      margin-top: 0;
-      margin-bottom: 20pt;
-    }
-
-    table {
-      margin-bottom: 10pt;
-    }
-
-    table th, table td {
-      padding: 6pt;
-    }
-
-    .total {
-      margin-top: 20pt;
-      margin-bottom: 10pt;
-    }
-
-    .footer {
-      margin-top: 20pt;
-    }
-
-    /* hide some elements that are not necessary for print */
-    button {
-      display: none;
-    }
-
-    #printable-area {
-				display: block;
-			}
-
-    .non-printable {
-      display: none;
-    }
-  }
-
-	</style>
-</head>
-<body>
-	<div class="container" id="printable-area">
+	<div class="container" id="data">
     
-    <h1>COMAPNY NAME</h1>
-  
-      <table>
-        <thead>
+    <div class="container">
+      <div class="row">
+        <div class="col-sm-6">
+          <h3 class="text-info">أنحمات الرقابة</h3>
+          <h5 class="text-primary">Andhamat Al Raqaba</h5>
+
+          {% for i in company|slice:":1" %}
+          <h5> <b>Customer الشركة:</b>  {{i.client_name}}</h5>
+          <h5><b> Vat Number الرقم الضريبي:</b> {{i.tax_number}}</h5>
+
+          {% endfor %}
+          
+          {% for i in posdata|slice:":1" %}
+            
+         
+            
+          <p><b> Date التاريخ: </b> {{i.date|date}}</p>
+          <p><b> Time الوقت:</b> {{i.date|time}}</p>
+         
+          
+          {% endfor %}
+        </div>
+
+        <div class="col-sm-6 invoice_img text-right">
+          <img  src="{% static '/img/vision-2030-logo.png' %}" alt="">
+          <h5><b> Vat Number الرقم الضريبي:  </b> 300950786200003</h5>
+          
+          
+            <p><b> Invoice No رقم الفاتورة:</b></p>
+            <p><b> Cusiar كوسيار : </b>{{request.user}}</p>
+
+        </div>
+      </div>
+    </div>
+  <h4 class="text-center text-primary">Tax Invoice فاتورة ضريبية</h4>
+     <hr>
+  <table class="table mt-3">
+        <thead  class="thead-light">
           <tr>
-            <th scope="col">Slug Code</th>
+            <th scope="col">SL</th>
             <th scope="col">Item </th>
             <th scope="col">QTY</th>
             <th scope="col">price</th>
@@ -124,7 +58,7 @@
         <tbody>
           {% for i in posdata %}
           <tr>
-            <th scope="row">{{i.item.slug}}</th>
+            <th scope="row">{{i.id}}</th>
             <td>{{i.item}}</td>
             <td>{{i.qty}}</td>
             <td>{{i.item.price}}</td>
@@ -132,24 +66,39 @@
             <td>{{i.vatcost}}</td>
             <td>{{i.Discount_price}}</td>
             <td>{{i.Total_amount}}</td>
+            
           </tr>
           {% endfor %}
         </tbody>
       </table>
   
       <div class="total">
-        Total: {{ total }}
+      <h5>Groos Total={{gross_total}}</h5>
+    <h5>Tax 15% ={{vat}}</h5>
+    <h5>discount={{discount}}</h5>
+    <h5>Total= {{total}}</h5>
       </div>
   
       <div class="footer">
-        Thank you for your business!
+        <h5 class="text-center text-danger">Thanks for your  purchase! <i class="fa-solid fa-heart"></i></h5>
       </div>
   </div>
 
-  <button onclick="window.print()" class="btn btn-primary mt-3 non-printable">Get Bill</button>
+  <button onclick="myfun()" class="btn btn-primary mt-3">Get Bill</button>
 
-</body>
-</html>
+
+
+
+  <script type="text/javascript">
+    function myfun(){
+      var body = document.getElementById('body').innerHTML;
+      var data = document.getElementById('data').innerHTML;
+      document.getElementById('body').innerHTML=data;
+      window.print();
+      document.getElementById('body').innerHTML=body;
+    }
+
+  </script>
 
 {% endblock content %}
 

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h5 class="alert alert-success">Total Transctions</h5>
+<table class="table ">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Money</th>
+        <th scope="col">Suppluyer name</th>
+        <th scope="col">Date</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for i in buy_product %}
+      <tr>
+        
+        <td>{{i.id}}</td>
+        <td>{{i.money}}</td>
+        <td>{{i.supplyer.sypplyer_name}}</td>
+        <td>{{i.date}}</td>
+      </tr>
+      {% endfor %}
+        
+      
+    </tbody>
+  </table>
+{% endblock content %}
+    

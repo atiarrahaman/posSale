@@ -98,3 +98,10 @@ section{
     border-radius: 5px;
     outline: none;
 }
+
+
+
+.invoice_img img{
+	width: 100px;
+	height: 100px;
+}

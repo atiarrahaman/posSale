@@ -1,5 +1,5 @@
 from django.db import models
-
+from django.utils import timezone
 # Create your models here.
 
 
@@ -63,7 +63,7 @@ class ProductInputCart(models.Model):
 
 
 class Client(models.Model):
-    client_name=models.CharField(max_length=250,default='company name')
+    client_name=models.CharField(max_length=250,default='company')
     tax_number=models.IntegerField(default=300950786200003)
 
 
@@ -71,6 +71,16 @@ class PosSale(models.Model):
     item=models.ForeignKey('Product', on_delete=models.CASCADE)
     qty=models.PositiveIntegerField(default=1)
     Discount_price=models.FloatField(default=0)
+    date=models.DateTimeField(blank=True, null=True)
+    
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.date = timezone.now()
+        return super(PosSale, self).save(*args, **kwargs)
+
+
 
      
     @property
@@ -97,6 +107,8 @@ class CheckOut(models.Model):
     item=models.ForeignKey(Product,on_delete=models.CASCADE)
     order_date= models.DateTimeField(auto_now_add=True)
     qty=models.PositiveIntegerField(default=1)
+    date=models.DateTimeField(blank=True, null=True)
+    
 
     @property
     def Total_amount(self):
@@ -107,5 +119,61 @@ class CheckOut(models.Model):
     
 
 
+
+class AddExpenseMony(models.Model):
+    Money=models.PositiveIntegerField()
+    reason=models.CharField(max_length=200)
+    date=models.DateTimeField()
+    def __str__(self):
+        return self.Money
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.date = timezone.now()
+        return super(AddExpenseMony, self).save(*args, **kwargs)
+
+class AddTrasctions(models.Model):
+    money=models.PositiveIntegerField()
+    reason=models.CharField(max_length=200)
+    date=models.DateTimeField()
    
+    
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.date = timezone.now()
+        return super(AddTrasctions, self).save(*args, **kwargs)
+
+   
+class BuyProduct(models.Model):
+    money=models.PositiveIntegerField()
+    supplyer=models.ForeignKey(Suplyer, on_delete=models.CASCADE)
+    date=models.DateTimeField()
+    def __str__(self):
+        return self.supplyer.sypplyer_name
+    
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.date = timezone.now()
+        return super(BuyProduct, self).save(*args, **kwargs)
+
+
+
+class AddCash(models.Model):
+    add_money=models.PositiveIntegerField()
+    Reason=models.CharField(max_length=200)
+    date=models.DateTimeField()
+   
+    
+    def save(self, *args, **kwargs):
+        ''' On save, update timestamps '''
+        if not self.id:
+            self.created = timezone.now()
+        self.date = timezone.now()
+        return super(AddCash, self).save(*args, **kwargs)
+
    

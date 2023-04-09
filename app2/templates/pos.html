@@ -4,7 +4,7 @@
 {% block content %}
    <div class="container">
     <div class="row">
-      <div class="col-sm-8">
+      <div class="col-sm-9">
         <form class="mt-4 " action="" method="POST" >
           {% csrf_token %}
           {% for field in form  %}
@@ -17,7 +17,7 @@
       </form> 
        </div>
     
-     <div class="col-sm-4 mt-4 text-right">
+     <div class="col-sm-3 mt-4 text-right">
       <a href="" type="button" data-toggle="modal" data-target="#CompanyNameadd" class="btn btn-warning ">Add Company Name</a>
      </div>
    </div>

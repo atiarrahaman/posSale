@@ -2,6 +2,31 @@
 
 
 {% block content %}
-    
+<h5 class="alert alert-success">Total expense</h5>
+<table class="table ">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Money</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Date</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for i in expensdata %}
+      <tr>
+        
+        <td>{{i.id}}</td>
+        <td>{{i.Money}}</td>
+        <td>{{i.reason}}</td>
+        <td>{{i.date}}</td>
+      </tr>
+      {% endfor %}
+        
+      
+    </tbody>
+  </table>
 {% endblock content %}
     

@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+<h5 class="alert alert-success">Cash</h5>
+<table class="table ">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Id</th>
+        <th scope="col">Money</th>
+        <th scope="col">Reason</th>
+        <th scope="col">Date</th>
+        
+      </tr>
+    </thead>
+    <tbody>
+      
+      {% for i in cashdata %}
+      <tr>
+        
+        <td>{{i.id}}</td>
+        <td>{{i.add_money}}</td>
+        <td>{{i.Reason}}</td>
+        <td>{{i.date}}</td>
+      </tr>
+      {% endfor %}
+        
+      
+    </tbody>
+  </table>
+{% endblock content %}
+    

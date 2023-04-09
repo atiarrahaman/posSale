@@ -9,7 +9,7 @@
            <div class="col-md-4 mt-2">
             <div class="card p-3 text-center">
               <h3>Total Sale</h3>
-              <p>{{total_amount}}</p>
+              <p>{{total_amount|floatformat:"-2"}}</p>
             </div>
          </div>
            
@@ -17,39 +17,179 @@
 
             <div class="col-md-4 mt-2">
                 <div class="card p-3 text-center">
-                    <h3>Total BUY</h3>
-                    <p>1200SR</p>
+                  <div class="icon d-inline">
+                    <a class="text-left " href=""data-toggle="modal" data-target="#exampleModalbuy"><i class="fa-solid fa-plus"></i></a>
+                    <a class="texr-right" href=""> <i class="fa-solid fa-list"></i></a>
+                      
+                  </div>
+                    <h3>BUY products</h3>
+                    <p>{{buy_products}} SR</p>
                   </div>
             </div>
             <div class="col-md-4 mt-2">
                 <div class="card p-3 text-center">
                     <h3>Today Sale</h3>
-                    <p>1200SR</p>
+                    <p>{{today_sale|floatformat:"-2"}} SR</p>
                   </div>
             </div>
 
             <div class="col-md-4 mt-2">
                 <div class="card p-3 text-center">
+                  <div class="icon d-inline">
+                    <a class="text-left " href=""data-toggle="modal" data-target="#exampleModaltran"><i class="fa-solid fa-plus"></i></a>
+                    <a class="texr-right" href=""> <i class="fa-solid fa-list"></i></a>
+                      
+                  </div>
                     <h3>Transction</h3>
-                    <p>1200SR</p>
+                    <p>{{transction_amount}} SR</p>
                   </div>
             </div>
             <div class="col-md-4 mt-2">
                 <div class="card p-3 text-center">
+                <div class="icon d-inline">
+                  <a class="text-left " href=""data-toggle="modal" data-target="#exampleModal"><i class="fa-solid fa-plus"></i></a>
+                  <a class="texr-right" href=""> <i class="fa-solid fa-list"></i></a>
+                    
+                </div>
                     <h3>Expense</h3>
-                    <p>1200SR</p>
+                    <p>{{expense_amount}} SR</p>
                   </div>
             </div>
 
             <div class="col-md-4 mt-2">
                 <div class="card p-3 text-center">
+                  <div class="icon d-inline">
+                    <a class="text-left " href=""data-toggle="modal" data-target="#exampleModalcash"><i class="fa-solid fa-plus"></i></a>
+                    <a class="texr-right" href=""> <i class="fa-solid fa-list"></i></a>
+                      
+                  </div>
                     <h3>Cash</h3>
-                    <p>{{total_amount}}</p>
+                    <p>{{cash|floatformat:"-2"}}</p>
                   </div>
             </div>
             
            
         </div>
     </div>
+
+
+
+
+
+
+  
+  <!-- Expense Model -->
+  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Add Expense</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form action="" method="POST">
+            {% csrf_token %}
+            {{fm.as_p}}
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+      </div>
+    </div>
+  </div>
+
+
+
+ <!-- Transactions Model -->
+ <div class="modal fade" id="exampleModaltran" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add Transctions</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+          {% csrf_token %}
+          {{transfm.as_p}}
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Total buy products Modal-->
+
+<!-- Transactions Model -->
+<div class="modal fade" id="exampleModalbuy" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Buy Products</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+          {% csrf_token %}
+          {{buyfm.as_p}}
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- cash modal -->
+
+
+<div class="modal fade" id="exampleModalcash" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add aaaa Cash</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="POST">
+          {% csrf_token %}
+          {{cashfm.as_p}}
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="submit" class="btn btn-primary">Save changes</button>
+      </div>
+    </form>
+    </div>
+  </div>
+</div>
+
+
+
 {% endblock content %}
     
